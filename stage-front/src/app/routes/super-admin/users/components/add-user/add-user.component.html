@@ -1,0 +1,90 @@
+@if (!addUserIsVisible){
+
+  <div class="ml-1 mt-5">
+    <Button hlmBtn (click)="toggleAddUser()" >
+      <hlm-icon size='sm' name="lucideUserPlus" class="size-7 mr-1.5" />
+      Ajouter un utilisateur
+    </Button>
+  </div>
+
+} @else {
+  <h1 class="mt-10 mb-3 ml-3 text-2xl ">Ajouter un utilisateur</h1>
+  <form [formGroup]="addedUser" (submit)="addUser()" class=" border-[1px] gap-20 flex rounded-lg p-5">
+    <div class="flex-col flex gap-3">
+
+      <label hlmLabel>Matricule
+        <input class='w-80' hlmInput type='text' formControlName="matricule" placeholder='Matricule'/>
+      </label>
+
+      <label hlmLabel>Nom
+        <input class='w-80 mb-4' formControlName="nom" hlmInput type='text' placeholder='Nom'/>
+      </label>
+
+      <label hlmLabel >Prénom
+        <input class='w-80 mb-4' formControlName="prenom" hlmInput type='text' placeholder='Prénom'/>
+      </label>
+
+      <label hlmLabel>Mot de passe
+        <input class='w-80 mb-4' formControlName="mdp" hlmInput type='text' placeholder='Mot de passe'/>
+      </label>
+
+      <label hlmLabel>Confirmer le mot de passe
+        <input class='w-80 mb-4' hlmInput type='text' formControlName="confirmMdp" placeholder='Confirmer le mot de passe'/>
+      </label>
+    </div>
+    <div class="flex-col flex justify-between min-h-full">
+      <div class="flex-col flex gap-7">
+
+        <div class="flex-col flex">
+          <label for="port" class="font-semibold text-sm">
+            Port
+          </label>
+          <brn-select id="port" class="inline-block" formControlName="port" placeholder="Sélectionner un port">
+            <hlm-select-trigger class="w-80">
+              <hlm-select-value  />
+            </hlm-select-trigger>
+            <hlm-select-content>
+              @for (port of ports;track port.id){
+                <hlm-option [value]="port.id">{{ port?.nom }}</hlm-option>
+              }
+            </hlm-select-content>
+          </brn-select>
+        </div>
+
+        <div class="flex-col flex">
+          <label for="profiles" class="font-semibold text-sm">
+            Profiles
+          </label>
+          <brn-select id="profiles" class="inline-block" formControlName="profiles" placeholder="Sélectionner les profiles" [multiple]="true">
+            <hlm-select-trigger class="w-80">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+              @for (profile of profiles;track profile.id){
+                <hlm-option [value]="profile.id">{{ profile?.nom }}</hlm-option>
+              }
+            </hlm-select-content>
+          </brn-select>
+        </div>
+
+      </div>
+
+      <div class="flex justify-between">
+        @if (loading){
+          <button disabled class="px-5"  size="lg" hlmBtn><hlm-icon name="lucideLoader2"  class="mr-3 animate-spin" /> Ajouter</button>
+
+        } @else {
+          <button hlmBtn type="submit"   size="lg" >Ajouter</button>
+
+        }
+        <button hlmBtn class="bg-gray-400 hover:bg-gray-600" size="lg" (click)="toggleAddUser()">Annuler</button>
+      </div>
+
+    </div>
+
+
+
+  </form>
+
+
+}

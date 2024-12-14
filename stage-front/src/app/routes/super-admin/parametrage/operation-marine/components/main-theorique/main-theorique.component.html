@@ -1,0 +1,45 @@
+
+<hlm-table class="min-w-[600px]">
+  <hlm-caption>Liste des main théoriques assignées.</hlm-caption>
+  <hlm-trow>
+    <hlm-th class="w-[16.7%]">Nom</hlm-th>
+    <hlm-th class="w-[16.7%]">Prestation</hlm-th>
+    <hlm-th class="w-[16.7%] ">Trafic</hlm-th>
+    <hlm-th class="w-[16.7%]">Ressources humaines</hlm-th>
+    <hlm-th class="w-[16.7%]">Ressources matérielles</hlm-th>
+    <hlm-th class="w-[16.7%]">Action</hlm-th>
+  </hlm-trow>
+  @if (operation.mainTheorique.length ===0){
+    <div class="text-center mt-5">Aucune main théorique assignée</div>
+  } @else {
+    @for (main of operation.mainTheorique;track main.id){
+      <hlm-trow>
+        <hlm-th class="w-[16.7%]">{{ main.nom }}</hlm-th>
+        <hlm-th class="w-[16.7%]">{{ main.prestation.nom }}</hlm-th>
+        <hlm-th class="w-[16.7%] ">{{ main.navire.nom }}</hlm-th>
+        <hlm-th class="w-[16.7%]">
+          <app-ressources-humaines-marine-dialog [listRessourceHumaine]="main.ressourcesHumaines" />
+        </hlm-th>
+        <hlm-th class="w-[16.7%]">
+          <app-ressources-materielles-marine-dialog [listRessourceMaterielle]="main.ressourcesMaterielles" />
+        </hlm-th>
+        <hlm-th class="w-[16.7%]">
+          <button hlmBtn size="icon" (click)="removeMainTheorique(main)"  class="gap-2" variant="destructive">
+            <hlm-icon size="sm" name="lucideTrash2" />
+          </button>
+        </hlm-th>
+      </hlm-trow>
+    }
+  }
+
+</hlm-table>
+
+  @if (!show){
+
+    <button hlmBtn (click)="toggleShow()" >Ajouter une main théorique</button>
+
+  } @else {
+    <app-add-marine-main-theorique (toggleShow)="toggleShow()" (refresh)="refresh.emit()" [operation]="operation" />
+  }
+
+<hlm-toaster />

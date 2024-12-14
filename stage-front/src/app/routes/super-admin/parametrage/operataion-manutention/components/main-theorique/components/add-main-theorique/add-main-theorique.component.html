@@ -1,0 +1,96 @@
+
+
+  <div class="mt-8">
+    <h2 class="text-2xl text-center mb-7 font-semibold" >Main théorique : Manutention</h2>
+    <form  [formGroup]="form">
+      <div class="flex flex-col gap-5 ">
+        <div class="flex gap-28 justify-center" >
+          <label hlmLabel >
+            Nom de la main
+            <input class="w-60" hlmInput type="text" formControlName="nom" placeholder="Nom de la main"/>
+          </label>
+
+          <label hlmLabel >
+            Prestation
+            @if(prestationLoading){
+            <hlm-skeleton class='h-10 w-60  mt-1' />
+            } @else {
+              <brn-select formControlName="prestation" placeholder="Selectionner prestation">
+                <hlm-select-trigger class="w-60 mt-1">
+                  <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                  @for (prestation of prestationList;track prestation.id){
+                    <hlm-option [value]="prestation" >{{ prestation.nom }}</hlm-option>
+                  }
+                </hlm-select-content>
+              </brn-select>
+            }
+          </label>
+        </div>
+
+        <div class="flex gap-28 justify-center" >
+
+          <label hlmLabel >
+            Type trafic
+            @if(typeTraficLoading){
+              <hlm-skeleton class='h-10 w-60  mt-1' />
+
+            } @else {
+              <brn-select formControlName="typeTrafic" placeholder="Selectionner prestation">
+                <hlm-select-trigger class="w-60 mt-1">
+                  <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                  @for (typeTrafic of typeTraficList;track typeTrafic){
+                    <hlm-option [value]="typeTrafic" >{{ typeTrafic.nom }}</hlm-option>
+                  }
+                </hlm-select-content>
+              </brn-select>
+            }
+          </label>
+
+          <label hlmLabel >
+            Trafic
+            @if(traficLoading){
+              <hlm-skeleton class='h-10 w-60  mt-1' />
+
+            } @else {
+              <brn-select formControlName="trafic" placeholder="Selectionner prestation">
+                <hlm-select-trigger class="w-60 mt-1">
+                  <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                  @for (trafic of filteredTraficList;track trafic.id){
+                    <hlm-option [value]="trafic" >{{ trafic.nom }}</hlm-option>
+                  }
+                </hlm-select-content>
+              </brn-select>
+            }
+          </label>
+
+        </div>
+        <div class="flex justify-center gap-28 mt-4">
+          <button hlmBtn (click)="toggleShow.emit()" class="w-60 " >Annuler</button>
+          <button hlmBtn type="submit" [disabled]="form.invalid" (click)="chagerRessources()" class="w-60 "  >Charger </button>
+        </div>
+        @if (showRessources){
+
+          @if(ressourcesLoading){
+
+            <div class="flex justify-center mt-8 gap-4">
+              <hlm-spinner  />
+            </div>
+
+          } @else {
+            <app-add-ressources [fonctions]="fonctionList" [loading]="loading" (enregistrer)="enregistrer($event)" [typesEquipement]="typesEquipementList" [accessoires]="accessoireList"  [equipements]="equipementList"  />
+          }
+        }
+
+
+      </div>
+    </form>
+  </div>
+
+
+

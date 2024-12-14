@@ -1,0 +1,63 @@
+@if(edit) {
+  <hlm-trow [formGroup]="form_ressourceHumaine">
+
+    <hlm-th class="w-[20%] flex justify-center">
+      <brn-select formControlName="fonction" >
+        <hlm-select-trigger class="w-full max-w-full" >
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (fonction of fonctions;track fonction.id){
+            <hlm-option [value]="fonction" >{{ fonction.nom }}</hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center">
+      <input class="w-full max-w-full" formControlName="totale" hlmInput type="number"  />
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center">
+      <input class="w-full max-w-full" hlmInput type="number" formControlName="maximum"  />
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center pl-5">
+      <hlm-checkbox class="ml-4" [checked]="form_ressourceHumaine.value.maximum_obligatoire || false" formControlName="maximum_obligatoire" />
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center ">
+      <button hlmBtn size="icon" brnSheetTrigger  (click)="editRessource()" class="gap-2 bg-green-700 hover:bg-green-800" >
+        <hlm-icon size="sm" name="lucideCheck"  />
+      </button>
+    </hlm-th>
+
+  </hlm-trow>
+
+
+}@else {
+  <hlm-trow [formGroup]="form_ressourceHumaine">
+
+    <hlm-th class="w-[20%] flex justify-center">{{ ressource.fonction.nom }}</hlm-th>
+    <hlm-th class="w-[20%] flex justify-center">{{ ressource.totale }}</hlm-th>
+    <hlm-th class="w-[20%] flex justify-center">
+      <input class="w-full max-w-full" hlmInput type="number" formControlName="maximum"  />
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center ">
+      <hlm-checkbox class="ml-4" [checked]="form_ressourceHumaine.value.maximum_obligatoire || false" formControlName="maximum_obligatoire" />
+    </hlm-th>
+
+    <hlm-th class="w-[20%] flex justify-center gap-2 flex">
+      <button hlmBtn size="icon"  (click)="toggleEditBox()" class="gap-2 bg-green-700 hover:bg-green-800" >
+        <hlm-icon size="sm" name="lucideEdit"  />
+      </button>
+      <button hlmBtn size="icon"  class="gap-2"  (click)="removeRessource()" variant="destructive">
+        <hlm-icon size="sm" name="lucideTrash2"  />
+      </button>
+    </hlm-th>
+
+  </hlm-trow>
+
+
+}

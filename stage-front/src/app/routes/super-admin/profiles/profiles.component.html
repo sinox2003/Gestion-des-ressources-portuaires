@@ -1,0 +1,57 @@
+<div class="w-full pb-8 h-dvh overflow-y-auto">
+  <div class="container  py-8  ">
+    <h1 class="page-header text-3xl mb-7">Liste des profiles et leurs droits</h1>
+    @if (loading){
+      <div class="space-y-1">
+        <hlm-skeleton *ngFor="let i of [0,1,2,3,4,5] " class='h-12 w-full' />
+      </div>
+    } @else {
+      @for (profile of profileList; track profile.id) {
+        <div hlmAccordion>
+          <div hlmAccordionItem>
+            <button hlmAccordionTrigger>
+              {{ profile.nom }}
+              <hlm-icon hlmAccIcon />
+            </button>
+            <brn-accordion-content hlm>
+              <div class="flex flex-col gap-1">
+                @if (!profile.droits.length) {
+                  <p class="pl-5">Aucun droit pour ce profile</p>
+                } @else {
+                  @for (droit of profile.droits; track droit.id) {
+                    <div class="flex justify-between">
+                      <brn-hover-card>
+                        <button hlmBtn variant="link" class="gap-2" brnHoverCardTrigger>
+                          <hlm-icon size="sm" name="lucideBookMarked" />
+                          {{ droit.nom }}
+                        </button>
+                        <hlm-hover-card-content class="pt-3 pb-5 px-4 items-start gap-1.5 text-white bg-teal-700 flex text-[13px]" *brnHoverCardContent>
+                          <hlm-icon size="lg" name="lucideClipboardList" />
+                          <div class="pt-1.5">
+                            <p class="flex items-center gap-1 font-semibold">
+                              <hlm-icon size="sm" name="lucideChevronRight" />
+                              {{ droit.nom }}
+                            </p>
+                            <p class="pl-[22px]">
+                              {{ droit.description }}
+                            </p>
+                          </div>
+                        </hlm-hover-card-content>
+                      </brn-hover-card>
+                      <button hlmBtn size="sm" (click)="removeDroit(profile,droit)" class="gap-2" variant="destructive">
+                        <hlm-icon size="sm" name="lucideCopyMinus"  />Remove
+                      </button>
+                    </div>
+                  }
+                }
+                <app-select-droits (refresh)="fetchProfiles()"  [currentProfile]="profile" />
+              </div>
+            </brn-accordion-content>
+          </div>
+        </div>
+      }
+    }
+
+  </div>
+
+</div>

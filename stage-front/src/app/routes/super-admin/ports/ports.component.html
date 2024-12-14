@@ -1,0 +1,39 @@
+<div class="container py-8 overflow-y-auto h-dvh">
+  <h1 class="page-header text-3xl mb-7">Liste des ports et leur terminaux</h1>
+
+  @if (loading) {
+    <div class="space-y-1">
+      <hlm-skeleton *ngFor="let i of [0,1,2,3,4,5]" class="h-12 w-full" />
+    </div>
+  } @else {
+    <div hlmAccordion type="multiple">
+      @for (port of portsList; track port.id;) {
+        <div hlmAccordionItem>
+          <button hlmAccordionTrigger class="font-semibold">
+            PORT {{ port.nom.toUpperCase() }}
+            <hlm-icon hlmAccIcon />
+          </button>
+          <brn-accordion-content hlm>
+            @if (port.terminals.length === 0) {
+              <p class="pl-5">Aucun terminal pour ce port</p>
+            } @else {
+              <div class="flex flex-col">
+                @for (terminal of port.terminals; track terminal.id;) {
+                  <app-terminal-item [terminal]="terminal" (refresh)="fetchPorts()" [port]="port" />
+                }
+              </div>
+            }
+            <div class="flex justify-center pt-2 items-center ">
+              <app-edit-port [port]="port" (refresh)="fetchPorts()" />
+              <app-add-terminal [port]="port" (refresh)="fetchPorts()" />
+              <app-delete-port [port]="port" (refresh)="fetchPorts()" />
+            </div>
+          </brn-accordion-content>
+        </div>
+      }
+    </div>
+  }
+
+  <app-add-port (refresh)="fetchPorts()"/>
+</div>
+

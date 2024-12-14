@@ -1,0 +1,53 @@
+<div [formGroup]="form" >
+  <div   class="flex justify-center gap-28">
+    <label hlmLabel class="flex-col flex gap-1">
+      Fonction
+      @if (fonctionLoading){
+        <hlm-skeleton class='h-10 mt-1 w-60' />
+      } @else {
+        <brn-select class="inline-block" formControlName="fonctions" placeholder="Sélectionner les fonctions" [multiple]="true">
+          <hlm-select-trigger class="w-60">
+            <hlm-select-value />
+          </hlm-select-trigger>
+          <hlm-select-content>
+            @for (fonction of fonctions;track fonction.id) {
+              <hlm-option  [value]="fonction" >{{fonction.nom}}</hlm-option>
+            }
+          </hlm-select-content>
+        </brn-select>
+      }
+
+    </label>
+
+
+    <label hlmLabel class="flex-col flex gap-1">
+      Personnel
+      @if (personnelLoading){
+        <hlm-skeleton class='h-10 mt-1 w-60' />
+      } @else {
+        <brn-popover>
+          <button brnPopoverTrigger (click)="$event.preventDefault()" hlmBtn variant="outline" class="w-60 flex justify-between">
+            Sélectionner le personnel
+            <hlm-icon size="sm" name="lucideChevronDown" />
+          </button>
+          <div hlmPopoverContent  class="w-60" *brnPopoverContent="let ctx">
+            <hlm-scroll-area class="w-full border h-72 rounded-md border-border">
+              <div class="p-4">
+                @for (membre of filteredPersonnel;track membre.matricule){
+                  @if (isNewFonction(membre.fonction.id,ctx)){
+                    <div class="font-semibold underline-offset-1 underline mb-2">{{ membre.fonction.nom }}</div>
+                  }
+                  <label class="flex items-center font-normal" hlmLabel>
+                    <hlm-checkbox [checked]="isChecked(membre)" (changed)="onCheckboxChange($event,membre)" class="mr-2" />
+                     {{membre.matricule}}
+                  </label>
+                  <div hlmSeparator class="my-2"></div>
+                }
+              </div>
+            </hlm-scroll-area>
+          </div>
+        </brn-popover>
+      }
+    </label>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="flex justify-between items-center">
+  @if (isShown) {
+    <span class="font-medium pl-5">
+      {{ terminal.nom }}
+    </span>
+  } @else {
+    <div class="flex gap-4 items-center pl-1">
+      <input hlmInput id="modified" [(ngModel)]="modifyingTerminalValue" />
+      @if (loading) {
+        <button disabled hlmBtn>
+          <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" /> valider
+        </button>
+      } @else {
+        <button hlmBtn (click)="modifierNomTerminal()">valider</button>
+        <button hlmBtn (click)="toggleModifyingTerminal()" >Annuler</button>
+      }
+    </div>
+  }
+
+  <button hlmBtn variant="ghost" [brnMenuTriggerFor]="menu">
+    <hlm-icon class="w-4 h-4" name="lucideMoreVertical" />
+  </button>
+
+  <ng-template #menu>
+    <hlm-menu>
+      <hlm-menu-label>Actions</hlm-menu-label>
+      <hlm-menu-separator />
+      <hlm-menu-group>
+        <button class="text-red-700 hover:text-red-500" (click)="openDialog()" hlmMenuItem>
+          Supprimer terminal
+        </button>
+      </hlm-menu-group>
+      <hlm-menu-separator />
+      <hlm-menu-group>
+        <button (click)="toggleModifyingTerminal()" hlmMenuItem>Modifier terminal</button>
+      </hlm-menu-group>
+    </hlm-menu>
+  </ng-template>
+</div>
+
+<hlm-toaster />
+
+
+<hlm-alert-dialog #deleteDialog>
+  <hlm-alert-dialog-content *brnAlertDialogContent="let ctx">
+    <hlm-alert-dialog-header>
+      <h3 hlmAlertDialogTitle>Êtes-vous absolument sûr ?</h3>
+      <p hlmAlertDialogDescription>
+        Cette action est irréversible. Cela supprimera définitivement ce terminal et effacera ses données de nos
+        serveurs.
+      </p>
+    </hlm-alert-dialog-header>
+    <hlm-alert-dialog-footer>
+      <button hlmAlertDialogCancel (click)="ctx.close()">Annuler</button>
+      @if (deleteLoading){
+        <button disabled hlmBtn>
+          <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" /> En cours...
+        </button>
+      } @else {
+        <button hlmAlertDialogAction  (click)="supprimerTerminal(ctx)">Valider</button>
+      }
+    </hlm-alert-dialog-footer>
+  </hlm-alert-dialog-content>
+</hlm-alert-dialog>

@@ -1,0 +1,17 @@
+<hlm-trow>
+  <hlm-th class="w-[100px]">{{ equipe.id }}</hlm-th>
+  <hlm-th class="w-[100px]">{{ equipe.nom }}</hlm-th>
+  <hlm-th [formGroup]="form">
+    <brn-select class="inline-block"  formControlName="shift" placeholder="Selectionner un shift">
+      <hlm-select-trigger class="w-48">
+        <hlm-select-value />
+      </hlm-select-trigger>
+      <hlm-select-content>
+        <hlm-option value="SHIFT_1" >shift 1</hlm-option>
+        <hlm-option value="SHIFT_2">shift 2</hlm-option>
+        <hlm-option value="SHIFT_3">shift 3</hlm-option>
+      </hlm-select-content>
+    </brn-select>
+  </hlm-th>
+
+</hlm-trow>

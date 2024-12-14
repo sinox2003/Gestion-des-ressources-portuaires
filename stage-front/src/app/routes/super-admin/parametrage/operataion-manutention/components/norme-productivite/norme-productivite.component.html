@@ -1,0 +1,39 @@
+
+<hlm-table>
+  <hlm-caption>Liste des normes de productivité.</hlm-caption>
+  <hlm-trow>
+    <hlm-th class="w-[14.2%]">Trafic</hlm-th>
+    <hlm-th class="w-[14.2%]">Main théorique</hlm-th>
+    <hlm-th class="w-[14.2%]">Mode</hlm-th>
+    <hlm-th class="w-[14.2%]">Norme</hlm-th>
+    <hlm-th class="w-[14.2%]">Sens</hlm-th>
+    <hlm-th class="w-[14.2%]">Nature de sduivi</hlm-th>
+    <hlm-th class="w-[14.2%] flex justify-center">Actions</hlm-th>
+  </hlm-trow>
+
+  @for (norme of manutention.normeProductiviteSet;track norme.id){
+    <hlm-trow>
+      <hlm-th class="w-[14.2%]">{{ norme.trafic.nom }}</hlm-th>
+      <hlm-th class="w-[14.2%]">{{ norme.mainTheorique.nom }}</hlm-th>
+      <hlm-th class="w-[14.2%]">{{ norme.mode }}</hlm-th>
+      <hlm-th class="w-[14.2%]">{{ norme.norme }}</hlm-th>
+      <hlm-th class="w-[14.2%]">{{norme.sensImport && norme.sensExport ? 'import et export':norme.sensImport ? 'import' : 'export' }} </hlm-th>
+      <hlm-th class="w-[14.2%]">{{norme.natureSuivi }} </hlm-th>
+      <hlm-th class="w-[14.2%]  gap-2 flex justify-center">
+        <button hlmBtn size="icon" (click)="selectNorme(norme)" class="gap-2 bg-green-700 hover:bg-green-800" >
+          <hlm-icon size="sm" name="lucideEdit"  />
+        </button>
+        <app-delete-norme-productivite-button (refresh)="refresh.emit()" [norme]="norme" />
+      </hlm-th>
+    </hlm-trow>
+  }
+
+</hlm-table>
+
+
+@if (isVisible){
+    <app-add-norme-productivite #addNormeProductiviteComponent (refresh)="refresh.emit()" [selectedNorme]="selectedNorme" (toggleVisible)="toggleVisible()" [manutention]="manutention" />
+} @else {
+
+  <button hlmBtn class="mt-5" (click)="toggleVisible()" >Ajouter une norme de productivité</button>
+}

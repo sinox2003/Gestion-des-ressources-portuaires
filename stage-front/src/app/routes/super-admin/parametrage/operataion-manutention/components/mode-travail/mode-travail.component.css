@@ -1,0 +1,9 @@
+.field-box{
+  grid-template-columns: auto auto auto auto ;
+  display: grid;
+  gap: 20px;
+}
+
+.field-box label{
+  grid-column: 1/4;
+}

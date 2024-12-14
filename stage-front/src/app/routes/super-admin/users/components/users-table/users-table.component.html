@@ -1,0 +1,116 @@
+
+
+  <div class="flex gap-2">
+  <input class="w-80 mb-5 " (input)="search()" [(ngModel)]="searchValue" hlmInput placeholder='Search' type='text' />
+
+
+    <brn-select [(ngModel)]="filterCriteria" class="inline-block" placeholder="Search with">
+      <hlm-select-trigger>
+        <hlm-select-value  />
+      </hlm-select-trigger>
+      <hlm-select-content >
+        <hlm-option  value="matricule">Matricule</hlm-option>
+        <hlm-option value="nom">Nom</hlm-option>
+        <hlm-option value="prenom">Prenom</hlm-option>
+        <hlm-option value="port">Port</hlm-option>
+      </hlm-select-content>
+    </brn-select>
+
+  </div>
+  <hlm-table class="w-full  overflow-y-auto" style="max-height: 60vh">
+    <hlm-caption>A list of your recent invoices.</hlm-caption>
+    <hlm-trow>
+      <hlm-th class="columns-lg" style="max-width: 240px">Matricule</hlm-th>
+      <hlm-th class="columns">Nom</hlm-th>
+      <hlm-th class="columns">Prenom</hlm-th>
+      <hlm-th class="columns-lg">Authorisation</hlm-th>
+      <hlm-th class=" columns">Port</hlm-th>
+      <hlm-th class=" columns-sm">Actions</hlm-th>
+    </hlm-trow>
+    @if (loading){
+      <div class="w-full min-w-[400px] min-h-[200px] items-center flex justify-center">
+        <hlm-spinner />
+      </div>
+
+    }@else{
+      <div >
+        @for (user of filteredUsers;track user.matricule){
+          <hlm-trow>
+            <hlm-td truncate class="font-medium columns-lg">{{ user.matricule }}</hlm-td>
+            <hlm-td class="columns">{{ user.nom }}</hlm-td>
+            <hlm-td class="columns">{{ user.prenom }}</hlm-td>
+            <hlm-td class="columns-lg flex items-start flex-col">
+              @for (profile of user.profiles;track profile){
+                <span>
+                {{ profile.nom }}
+              </span>
+              }
+            </hlm-td>
+            <hlm-td class="columns">{{ user.port?.nom || "null" }}</hlm-td>
+
+            <hlm-td class="columns-sm ">
+              <button  class="h-6 w-6 pl-3.5 pr-3.5" align="end"  [brnMenuTriggerFor]="menu">
+                <hlm-icon class="w-4 h-4" name="lucideMoreHorizontal" />
+              </button>
+            </hlm-td>
+
+
+            <ng-template #menu>
+              <hlm-menu>
+                <hlm-menu-label>Actions</hlm-menu-label>
+                <hlm-menu-separator />
+
+                <hlm-menu-group>
+<!--                  <button class="text-red-700  hover:text-red-500" hlmMenuItem>Supprimer utilisateur</button>-->
+                  <button id="delete-user" class="text-red-700 hover:text-red-500" hlmMenuItem (click)="openDialog(user.matricule)">Supprimer utilisateur</button>
+
+
+                </hlm-menu-group>
+                <hlm-menu-separator />
+                <hlm-menu-group>
+                  <button (click)="openEditDrawer(user)" hlmMenuItem>Modifier donnees</button>
+                  <button hlmMenuItem [routerLink]="user.matricule">Voir details</button>
+                </hlm-menu-group>
+              </hlm-menu>
+            </ng-template>
+
+
+          </hlm-trow>
+        }
+
+      </div>
+
+
+    }
+
+
+  </hlm-table>
+
+<hlm-alert-dialog #editProfileDialog>
+  <hlm-alert-dialog-content *brnAlertDialogContent="let ctx">
+    <hlm-alert-dialog-header>
+      <h3 hlmAlertDialogTitle>Êtes-vous absolument sûr ?</h3>
+      <p hlmAlertDialogDescription>
+        Cette action est irréversible. Cela supprimera définitivement l'utilisateur {{deletedUserMatricule}} et supprimera ses données de nos
+        serveurs.
+      </p>
+
+      <h3 hlmAlertDialogTitle>Are you absolutely sure?</h3>
+
+    </hlm-alert-dialog-header>
+    <hlm-alert-dialog-footer>
+      <button hlmAlertDialogCancel (click)="ctx.close()">Cancel</button>
+      @if ( deleteLoading ){
+        <button disabled hlmAlertDialogAction><hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" /> Supprimer</button>
+
+
+      } @else {
+        <button hlmAlertDialogAction (click)="deleteUser(ctx)">Supprimer</button>
+
+      }
+    </hlm-alert-dialog-footer>
+  </hlm-alert-dialog-content>
+</hlm-alert-dialog>
+
+
+  <app-edit-user #editDrawer (refresh)="fetchUsers()" />

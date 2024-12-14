@@ -1,0 +1,9 @@
+
+<div class="max-h-[100%] w-full overflow-y-auto ">
+  <div class="container  p-5">
+    <app-users-table #tableComponent></app-users-table>
+
+    <app-add-user (refresh)="refreshTable()" ></app-add-user>
+
+  </div>
+</div>

@@ -1,0 +1,34 @@
+
+<hlm-dialog  >
+  <button brnDialogTrigger variant="link" hlmBtn>Cliquer</button>
+  <hlm-dialog-content  class="min-w-[800px]"  *brnDialogContent="let ctx">
+    <hlm-dialog-header >
+      <h3 brnDialogTitle hlm class="font-semibold text-xl">Ressources Humaines</h3>
+    </hlm-dialog-header>
+
+    <hlm-table>
+      <hlm-trow>
+        <hlm-th class="w-[25%] flex justify-center">Fonction</hlm-th>
+        <hlm-th class="w-[25%] flex justify-center">Nombre Total</hlm-th>
+        <hlm-th class="w-[25%] flex justify-center">Nombre Maximum</hlm-th>
+        <hlm-th class="w-[25%] flex justify-center">Maximum Obligatoire</hlm-th>
+      </hlm-trow>
+      <hlm-scroll-area class="w-full h-72  ">
+        @if (listRessourceHumaine.length > 0){
+          @for ( ressource of listRessourceHumaine;track ressource.id){
+            <hlm-trow>
+              <hlm-th class="w-[25%] flex justify-center" >{{ ressource.fonction.nom }}</hlm-th>
+              <hlm-th class="w-[25%] flex justify-center" >{{ ressource.totale }}</hlm-th>
+              <hlm-th class="w-[25%] flex justify-center" >{{ ressource.maximum || '0'  }}</hlm-th>
+              <hlm-th class="w-[25%] flex justify-center" >{{ ressource.maximum_obligatoire? 'Oui' : 'Non' }}</hlm-th>
+            </hlm-trow>
+          }
+        } @else {
+          <p class="pl-5">Aucune ressource humainne </p>
+        }
+      </hlm-scroll-area>
+
+    </hlm-table>
+
+  </hlm-dialog-content>
+</hlm-dialog>

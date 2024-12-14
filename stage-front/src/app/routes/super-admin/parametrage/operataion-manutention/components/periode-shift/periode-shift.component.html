@@ -1,0 +1,65 @@
+<div class="flex flex-col w-full " >
+  <h1 class="text-2xl text-center mb-7 font-semibold" >Période Shift</h1>
+  @if (operation.periodShift && !edit){
+    <app-shifts-box (toggleEdit)="toggleEditBox()" [periodShift]="operation.periodShift " />
+
+  } @else if(!operation.periodShift || edit){
+
+    <form [formGroup]="form">
+      <div class="flex w-full justify-center gap-[100px]">
+
+        <div class="gap-6  flex flex-col">
+          <h1 class="text-xl underline underline-offset-4" >Période Normale</h1>
+          <div class="gap-2 flex flex-col">
+            <label hlmLabel>Début du shift
+              <input class="w-60" formControlName="startNormalPeriod" hlmInput type="time" />
+            </label>
+          </div>
+        </div>
+
+        <div class="gap-6 flex flex-col">
+          <h1 class="text-xl underline underline-offset-4" >Période Ramadan</h1>
+          <div class="gap-2 flex flex-col">
+            <label hlmLabel>Début du shift
+              <input class="w-60" formControlName="startRamadanPeriod"  hlmInput type="time" />
+            </label>
+          </div>
+        </div>
+
+      </div>
+      @if (showMore){
+
+        <h2 class="text-xl italic mt-6 text-center underline underline-offset-4" >Définir la date de Ramadan</h2>
+        <div class=" flex my-2 justify-center gap-[100px]">
+          <label hlmLabel>Date début
+            <input class="w-60" formControlName="ramadanStartDate"  hlmInput type="date" />
+          </label>
+          <label hlmLabel>Date fin
+            <input class="w-60" formControlName="ramadanEndDate" hlmInput type="date" />
+          </label>
+        </div>
+
+      }
+
+      <div class="flex justify-center   my-4 ">
+        <button (click)="toggleMore()" class="items-center   gap-2 flex ">plus de paramétre
+          <hlm-icon size="sm" name="lucideChevronDown" class="transition ease-in duration-200 " [ngClass]="{'rotate-180':showMore}"  />
+        </button>
+      </div>
+
+      <div *ngIf="form.errors?.['ramadanDatesMismatch']" class="flex justify-center text-destructive my-3" >
+        La date de début doit être inférieure à la date de fin.
+      </div>
+      <div class="flex justify-center gap-8">
+        <button hlmBtn class="w-52" variant="secondary" *ngIf="edit" (click)="toggleEditBox()" >Annuler</button>
+        <button hlmBtn *ngIf="!loading" class="w-52" (click)="update()" >Enregistrer</button>
+        <button hlmBtn *ngIf="loading" disabled ><hlm-spinner size="xs" class="mr-3"/> En cours...</button>
+      </div>
+
+
+
+    </form>
+
+  }
+
+</div>

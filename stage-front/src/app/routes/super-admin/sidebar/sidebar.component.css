@@ -1,0 +1,46 @@
+.sidebar{
+  width: 270px;
+  padding:20px 10px 20px 10px;
+  height: 100%;
+  display: flex;
+  border-right: 1px solid #d8d8d8;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-content{
+  height: 80%;
+  width: 100%;
+  /*background:red;*/
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+button{
+  width: 100%;
+  border-radius: 5px;
+  justify-content: left;
+  height: 43px;
+  font-size:16px;
+  gap: 10px;
+
+}
+
+button:hover{
+
+  font-size:17px;
+  transition: all 300ms ease-in-out;
+
+}
+
+
+.logout-btn{
+  margin-bottom:10px
+}
+
+.routerLinkActive{
+  background: black;
+  color: white;
+  height: 45px;
+}

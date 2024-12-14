@@ -1,0 +1,36 @@
+
+<hlm-dialog  >
+  <button brnDialogTrigger variant="link" hlmBtn>Cliquer</button>
+  <hlm-dialog-content  class="min-w-[600px]"  *brnDialogContent="let ctx">
+    <hlm-dialog-header >
+      <h3 brnDialogTitle hlm class="font-semibold text-xl">Ressources Matérielles</h3>
+    </hlm-dialog-header>
+
+
+      <hlm-table>
+        <hlm-caption>Liste des equipements</hlm-caption>
+        <hlm-trow>
+          <hlm-th class="w-[33%] ">Id</hlm-th>
+          <hlm-th class="w-[33%] ">Famille d'equipement</hlm-th>
+          <hlm-th class="w-[33%] ">Equipement</hlm-th>
+
+        </hlm-trow>
+        <hlm-scroll-area class="w-full h-52  ">
+          @if (listRessourceMaterielle.equipements.length > 0){
+            @for ( equipement of listRessourceMaterielle.equipements ;track equipement.id){
+              <hlm-trow>
+                <hlm-th class="w-[33%] " >{{ equipement.id }}</hlm-th>
+                <hlm-th class="w-[33%] " >{{ equipement.type.nom }}</hlm-th>
+                <hlm-th class="w-[33%] " >{{ equipement.nom }}</hlm-th>
+              </hlm-trow>
+            }
+          } @else {
+            <p class="pl-5">Aucun equipement </p>
+          }
+        </hlm-scroll-area>
+      </hlm-table>
+
+
+
+  </hlm-dialog-content>
+</hlm-dialog>

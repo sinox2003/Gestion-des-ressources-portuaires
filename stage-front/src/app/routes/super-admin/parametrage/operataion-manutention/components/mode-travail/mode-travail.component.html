@@ -1,0 +1,63 @@
+<div class="flex flex-col w-fit ">
+  <h1 class="text-2xl text-center mb-11 font-semibold" >Mode de travail</h1>
+  @if (operation.modeTravail && !edit){
+    <div class="gap-4 mb-4 flex-col flex">
+      <span>
+        semaine : <span *ngIf="operation.modeTravail.semaine==='SIX_JOURS_SUR_SEPT'">6/7 jours</span>
+        <span *ngIf="operation.modeTravail.semaine==='SEPT_JOURS_SUR_SEPT'">7/7 jours</span>
+      </span>
+      <span>
+        jour : <span *ngIf="operation.modeTravail.jour==='DEUX_SHIFTS_SUR_TROIS'">2/3 shifts</span>
+        <span *ngIf="operation.modeTravail.jour==='TROIS_SHIFTS_SUR_TROIS'">3/3 shifts</span>
+      </span>
+    </div>
+    <button hlmBtn variant="destructive" (click)="toggleEditBox()">Modifier</button>
+  } @else if (operation.modeTravail===null || edit){
+    <div class=" field-box w-fit ">
+      <label   >Semaine :</label>
+      <brn-radio-group  class="flex  text-sm font-medium space-x-7" hlm [(ngModel)]="semaine">
+        <brn-radio hlm value="SIX_JOURS_SUR_SEPT">
+          <hlm-radio-indicator indicator />
+          6/7 jours
+        </brn-radio>
+        <brn-radio hlm value="SEPT_JOURS_SUR_SEPT">
+          <hlm-radio-indicator indicator />
+          7/7 jours
+        </brn-radio>
+      </brn-radio-group>
+
+      <label   >Jour : </label>
+      <brn-radio-group  class="flex  text-sm font-medium space-x-7" hlm [(ngModel)]="jour">
+        <brn-radio hlm value="DEUX_SHIFTS_SUR_TROIS">
+          <hlm-radio-indicator indicator />
+          2/3 shifts
+        </brn-radio>
+        <brn-radio hlm value="TROIS_SHIFTS_SUR_TROIS">
+          <hlm-radio-indicator indicator />
+          3/3 shifts
+        </brn-radio>
+
+      </brn-radio-group>
+    </div>
+    <div *ngIf="error" class="text-red-500 mt-5 text-xs">Tous les champs sont obligatoire</div>
+
+    @if (edit){
+      <div class="flex justify-between mt-10 w-full">
+        <button hlmBtn (click)="toggleEditBox()" variant="secondary" >Annuler</button>
+        @if (loading){
+          <button hlmBtn disabled  ><hlm-spinner size="xs" class="mr-3"/> Enregistrer</button>
+        } @else {
+        <button hlmBtn (click)="update()" >Enregistrer</button>
+        }
+      </div>
+    } @else {
+      <div class="flex justify-end mt-8 w-full">
+          <button hlmBtn *ngIf="loading" disabled ><hlm-spinner size="xs" class="mr-3"/> En cours...</button>
+          <button hlmBtn *ngIf="!loading" (click)="update()" >Enregistrer</button>
+      </div>
+    }
+
+  }
+
+
+</div>

@@ -1,0 +1,91 @@
+
+<form [formGroup]="form_ressourceHumaine" class="flex flex-col gap-5 mt-5" >
+  <h1 class="text-xl italic  text-teal-600  underline underline-offset-4">Ressources humaines</h1>
+
+  <div class="flex gap-28  justify-center" >
+
+    <label hlmLabel >
+      Fonctions
+      <brn-select formControlName="fonction" placeholder="Selectionner fonction">
+        <hlm-select-trigger class="w-60 mt-1">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (fonction of fonctions;track fonction.id){
+            <hlm-option [value]="fonction" >{{ fonction.nom }}</hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+    </label>
+    <label hlmLabel >
+      Nombre totale
+      <input class="w-60" formControlName="totale" hlmInput type="number"  placeholder="Nombre totale"/>
+    </label>
+
+  </div>
+
+
+
+  <div class="flex justify-center">
+    <button hlmBtn type="submit" class="w-60" (click)="addRessourceHumaine()" >Ajouter</button>
+  </div>
+
+  @if (listRessourceHumaine.length > 0){
+    <hlm-table>
+      <hlm-trow>
+        <hlm-th class="w-[20%] flex justify-center">Fonction</hlm-th>
+        <hlm-th class="w-[20%] flex justify-center">Nombre Total</hlm-th>
+        <hlm-th class="w-[20%] flex justify-center">Nombre Maximum</hlm-th>
+        <hlm-th class="w-[20%] flex justify-center">Maximum Obligatoire</hlm-th>
+        <hlm-th class="w-[20%] flex justify-center">Action</hlm-th>
+      </hlm-trow>
+      @for ( ressource of listRessourceHumaine;let index=$index;track index){
+        <app-ressource-humaine-marine-item [listRessourceHumaine]="listRessourceHumaine" [index]="index" [fonctions]="fonctions" [ressource]="ressource"  />
+      }
+
+    </hlm-table>
+  }
+
+</form>
+
+
+<form [formGroup]="form_ressourceMaterielle" class="flex flex-col gap-5 mt-5" >
+  <h1 class="text-xl italic underline  text-teal-600 underline-offset-4">Ressources humaines</h1>
+
+  <div class="flex gap-28  justify-center" >
+
+    <label hlmLabel >
+      Equipement famille
+      <brn-select formControlName="type_equipement" placeholder="Equipement famille">
+        <hlm-select-trigger class="w-60 mt-1">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (type of typesEquipement;track type){
+            <hlm-option [value]="type" >{{type.nom}}</hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+    </label>
+
+    <label hlmLabel >
+      Equipement
+      <brn-select  formControlName="equipements" placeholder="Selectionner equipement" [multiple]="true">
+        <hlm-select-trigger class="w-60 mt-1">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (equipement of filteredEquipements;track equipement.id){
+            <hlm-option [value]="equipement" >{{ equipement.nom }}</hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+    </label>
+
+  </div>
+
+</form>
+
+
+<button type="button" *ngIf="!loading" class="w-full mt-3" hlmBtn (click)="valider()" >Valider</button>
+<button type="button" *ngIf="loading" class="w-full mt-3"  disabled hlmBtn ><hlm-spinner size="sm" class="mr-3" />  En cours...</button>

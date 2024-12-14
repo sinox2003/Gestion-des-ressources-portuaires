@@ -1,0 +1,118 @@
+<div class="mt-10">
+  <h1 class="text-2xl font-semibold text-center" >Ajouter une norme</h1>
+
+  <form [formGroup]="form" >
+
+    <div class='flex justify-center mt-8 gap-28'>
+      <label hlmLabel >
+        Trafic
+        @if (traficLoading){
+          <hlm-skeleton class='h-10 w-60 mt-1 ' />
+        } @else {
+          <brn-select formControlName="trafic" placeholder="Selectionner trafic">
+            <hlm-select-trigger class="w-60 mt-1">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content class="max-h-56">
+              @for (trafic of traficList;track trafic.id){
+                <hlm-option [value]="trafic" >{{ trafic.nom }}</hlm-option>
+              }
+            </hlm-select-content>
+          </brn-select>
+        }
+      </label>
+
+      <label hlmLabel >
+        Main théorique
+        @if (traficLoading){
+          <hlm-skeleton class='h-10 w-60 mt-1 ' />
+        } @else {
+        <brn-select formControlName="mainTheorique" placeholder="Selectionner main">
+          <hlm-select-trigger class="w-60  mt-1">
+            <hlm-select-value />
+          </hlm-select-trigger>
+          <hlm-select-content>
+            @for (main of mainTheoriqueList;track main.id){
+              <hlm-option [value]="main" >{{ main.nom }}</hlm-option>
+            }
+          </hlm-select-content>
+        </brn-select>
+        }
+      </label>
+    </div>
+
+    <div class='flex justify-center my-3' *ngIf="form.get('trafic')?.dirty && mainTheoriqueList.length===0" >
+      <span class="text-destructive font-normal  " >Aucun main cree pour ce trafic.</span>
+    </div>
+
+    <div class='flex justify-center mt-8 gap-28'>
+      <label hlmLabel >
+        Mode
+          <brn-select formControlName="mode" placeholder="Selectionner trafic">
+            <hlm-select-trigger class="w-60 mt-1">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content class="max-h-56">
+                <hlm-option value="T/M" >T/M</hlm-option>
+                <hlm-option value="T/M/Shift" >T/M/Shift</hlm-option>
+            </hlm-select-content>
+          </brn-select>
+      </label>
+
+      <label hlmLabel >
+        Norme
+       <input hlmInput type="number" formControlName="norme" class="w-60" placeholder="Norme" />
+      </label>
+    </div>
+
+    <div class='flex justify-center mt-8 gap-28'>
+      <div class='flex items-center w-60 gap-5'>
+        <span class="font-semibold text-sm">
+          Sens
+        </span>
+        <div class="flex flex-col gap-5">
+          <label class="flex items-center" hlmLabel>
+            <hlm-checkbox formControlName="sensExport" class="mr-2" />
+            export
+          </label>
+          <label class="flex items-center" hlmLabel>
+            <hlm-checkbox formControlName="sensImport" class="mr-2" />
+            import
+          </label>
+        </div>
+
+      </div>
+
+      <div class='flex items-center  gap-5'>
+        <span class="font-semibold text-sm">
+          Nature suivi du produit
+        </span>
+        <brn-radio-group formControlName="natureSuivi" hlm class="flex-col  text-sm font-medium  flex gap-4">
+          <brn-radio hlm value="Shift">
+            <hlm-radio-indicator indicator />
+            Shift
+          </brn-radio>
+          <brn-radio hlm value="Fin du travail">
+            <hlm-radio-indicator indicator />
+            Fin du travail
+          </brn-radio>
+        </brn-radio-group>
+      </div>
+    </div>
+
+    <div class='flex justify-center mt-8 gap-28'>
+      @if (loading){
+        <button hlmBtn class="w-60">
+          <hlm-spinner size="sm" class="mr-3"/>
+          En cours...
+        </button>
+      } @else {
+
+       <button hlmBtn type="submit" [disabled]="form.invalid" (click)="ajouter()" class="w-60 "  >Enregistrer</button>
+      }
+      <button hlmBtn (click)="toggleVisible.emit()" class="w-60 " >Annuler</button>
+    </div>
+
+
+  </form>
+</div>

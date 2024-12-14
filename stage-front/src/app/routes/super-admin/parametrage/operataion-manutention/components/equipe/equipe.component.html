@@ -1,0 +1,53 @@
+
+<hlm-table>
+  <hlm-caption>Liste des équipes assignées.</hlm-caption>
+  <hlm-trow>
+    <hlm-th class="w-[20%]">Id</hlm-th>
+    <hlm-th class="w-[20%]">Nom</hlm-th>
+    <hlm-th class="w-[20%] ">Responsable</hlm-th>
+    <hlm-th class="w-[20%]">Personnel</hlm-th>
+    <hlm-th class="w-[20%]">Action</hlm-th>
+  </hlm-trow>
+  @if (operation.equipeList.length ===0){
+    <div class="text-center mt-5">Aucune équipe assignée</div>
+  } @else {
+      @for (equipe of operation.equipeList;track equipe.id){
+
+        <hlm-trow>
+
+          <hlm-th class="w-[20%]">{{equipe.id }}</hlm-th>
+
+          <hlm-th class="w-[20%]">{{equipe.nom }}</hlm-th>
+
+          <hlm-th class="w-[20%] ">
+            <brn-hover-card >
+              <button hlmBtn variant="link"  brnHoverCardTrigger>{{equipe.responsable.matricule }}</button>
+              <hlm-hover-card-content *brnHoverCardContent class="w-fit">
+                <div class="flex justify-between flex-col gap-2">
+                    <h4 class="text-sm font-semibold">Nom : {{equipe.responsable.nom}}</h4>
+                    <h4 class="text-sm font-semibold">Prénom : {{equipe.responsable.prenom}}</h4>
+                </div>
+              </hlm-hover-card-content>
+            </brn-hover-card>
+          </hlm-th>
+
+          <hlm-th class="w-[20%]">
+            <app-personnel-equipe-dialog  [equipe]="equipe"  (refresh)="refresh.emit()" />
+          </hlm-th>
+
+          <hlm-th class="w-[20%] flex gap-1">
+            <button hlmBtn size="icon" (click)="removeEquipe(equipe)" class="gap-2" variant="destructive">
+              <hlm-icon size="sm" name="lucideTrash2"  />
+            </button>
+            <app-edit-equipe [equipe]="equipe"  (refresh)="refresh.emit()" />
+          </hlm-th>
+        </hlm-trow>
+
+      }
+  }
+
+</hlm-table>
+<app-add-equipe  (refresh)="refresh.emit()" [operation]="operation" />
+
+
+<hlm-toaster />

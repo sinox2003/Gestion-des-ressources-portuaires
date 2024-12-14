@@ -1,0 +1,58 @@
+
+<hlm-dialog  >
+  <button brnDialogTrigger variant="link" hlmBtn>Cliquer</button>
+  <hlm-dialog-content  class="min-w-[900px]"  *brnDialogContent="let ctx">
+    <hlm-dialog-header >
+      <h3 brnDialogTitle hlm class="font-semibold text-xl">Ressources Matérielles</h3>
+    </hlm-dialog-header>
+
+    <div class="flex justify-between">
+      <hlm-table>
+        <hlm-caption>Liste des equipements</hlm-caption>
+        <hlm-trow>
+          <hlm-th class="w-36 ">Id</hlm-th>
+          <hlm-th class="w-36 ">Famille d'equipement</hlm-th>
+          <hlm-th class="w-36 ">Equipement</hlm-th>
+
+        </hlm-trow>
+        <hlm-scroll-area class="w-full h-52  ">
+          @if (listRessourceMaterielle.equipements.length > 0){
+            @for ( equipement of listRessourceMaterielle.equipements ;track equipement.id){
+              <hlm-trow>
+                <hlm-th class="w-36 " >{{ equipement.id }}</hlm-th>
+                <hlm-th class="w-36 " >{{ equipement.type.nom }}</hlm-th>
+                <hlm-th class="w-36 " >{{ equipement.nom }}</hlm-th>
+              </hlm-trow>
+            }
+          } @else {
+            <p class="pl-5">Aucun equipement </p>
+          }
+        </hlm-scroll-area>
+      </hlm-table>
+
+      <hlm-table>
+        <hlm-caption>Liste des accessoires</hlm-caption>
+        <hlm-trow>
+          <hlm-th class="w-36 ">Id</hlm-th>
+          <hlm-th class="w-36 ">Accessoire</hlm-th>
+
+        </hlm-trow>
+        <hlm-scroll-area class="w-full h-52  ">
+          @if (listRessourceMaterielle.accessoires.length > 0){
+            @for ( accessoire of listRessourceMaterielle.accessoires ;track accessoire.id){
+              <hlm-trow>
+                <hlm-th class="w-36 " >{{ accessoire.id }}</hlm-th>
+                <hlm-th class="w-36 " >{{ accessoire.nom }}</hlm-th>
+              </hlm-trow>
+            }
+          } @else {
+            <p class="pl-5">Aucun accessoire </p>
+          }
+        </hlm-scroll-area>
+      </hlm-table>
+
+    </div>
+
+
+  </hlm-dialog-content>
+</hlm-dialog>

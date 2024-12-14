@@ -1,0 +1,29 @@
+<button id="edit-profile" class="text-red-700" variant="link" (click)="openDialog()" hlmBtn>
+  <hlm-icon size="sm" class="mr-2" name="lucideMinusCircle" />
+  Supprimer le port
+</button>
+
+<hlm-alert-dialog #deleteDialog>
+  <hlm-alert-dialog-content *brnAlertDialogContent="let ctx">
+    <hlm-alert-dialog-header>
+      <h3 hlmAlertDialogTitle>Êtes-vous absolument sûr ?</h3>
+      <p hlmAlertDialogDescription>
+        Cette action est irréversible. Cela supprimera définitivement ce port et effacera ses données de nos
+        serveurs.
+      </p>
+    </hlm-alert-dialog-header>
+    <hlm-alert-dialog-footer>
+      <button hlmAlertDialogCancel (click)="ctx.close()">Annuler</button>
+      @if (deleteLoading){
+        <button disabled hlmBtn>
+          <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" /> En cours...
+        </button>
+      } @else {
+        <button hlmAlertDialogAction  (click)="supprimerPort(ctx)">Valider</button>
+      }
+    </hlm-alert-dialog-footer>
+  </hlm-alert-dialog-content>
+</hlm-alert-dialog>
+
+
+<hlm-toaster />

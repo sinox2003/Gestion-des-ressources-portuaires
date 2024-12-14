@@ -1,0 +1,49 @@
+.tab-buttons-group{
+  background-color: #F4F4F5;
+  padding: 4px;
+
+  border-radius: 5px;
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  overflow-x: auto;
+
+}
+
+.tab-buttons{
+  height: 32px;
+  border-radius: 5px;
+  padding: 0 20px 0 20px;
+  background-color: transparent;
+  color: #535353;
+
+  min-width: fit-content;
+
+}
+
+
+.active-tab-buttons{
+  background-color: white;
+  color: black;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.tab-content {
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #E5E5E5;
+  border-radius: 13px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+}
+
+.tab-content::-webkit-scrollbar {
+  padding-right: 2px;
+  width: 8px;
+}
+.tab-content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  margin-right: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 6px;
+}

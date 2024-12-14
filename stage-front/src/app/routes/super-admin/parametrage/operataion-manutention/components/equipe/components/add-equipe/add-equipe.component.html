@@ -1,0 +1,38 @@
+@if(isFormOpen){
+
+<div class="mt-8">
+  <h2 class="text-2xl text-center mb-7 font-semibold" >Définition Equipe</h2>
+  <form class="flex flex-col gap-4" [formGroup]="form" (submit)="$event.preventDefault()">
+    <div class="flex justify-center gap-28">
+      <label hlmLabel>Id de l'équipe
+        <input class="w-60" hlmInput type="text" formControlName="id" placeholder="Id de l'équipe"/>
+      </label>
+      <label hlmLabel>Nom de l'équipe
+        <input class="w-60" hlmInput type="text" formControlName="nom" placeholder="Nom de l'équipe"/>
+      </label>
+    </div>
+    <div class="flex justify-center ">
+      <label hlmLabel>Responsable de l'équipe
+        <app-responsable-combobox (setResponsable)="setResponsable($event)"/>
+      </label>
+    </div>
+    <app-personnel-select (setPersonnel)="setPersonnel($event)"/>
+    <div class="flex  justify-center gap-14">
+      <button class="w-full" (click)="toggleForm()" variant="secondary" hlmBtn >Annuler</button>
+      <button class="w-full" *ngIf="!loading"  (click)="update()" hlmBtn >Submit</button>
+      <button class="w-full" *ngIf="loading" disabled hlmBtn >
+        <hlm-spinner size="xs" class="mr-3" />  En cours...
+      </button>
+    </div>
+  </form>
+
+</div>
+
+
+} @else {
+  <div class="ml-1 mt-5">
+    <Button hlmBtn (click)="toggleForm()" >
+      Ajouter une équipe
+    </Button>
+  </div>
+}

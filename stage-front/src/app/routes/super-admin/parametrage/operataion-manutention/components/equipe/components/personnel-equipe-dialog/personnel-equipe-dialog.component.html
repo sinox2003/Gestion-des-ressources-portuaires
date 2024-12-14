@@ -1,0 +1,70 @@
+
+<hlm-dialog (closed)="onClose()" >
+  <button brnDialogTrigger variant="link" hlmBtn>Cliquer</button>
+  <hlm-dialog-content  class="min-w-[700px]"  *brnDialogContent="let ctx">
+    <hlm-dialog-header >
+      <h3 brnDialogTitle hlm>Personnel de l'équipe</h3>
+    </hlm-dialog-header>
+    <hlm-table >
+      <hlm-trow>
+        <hlm-th class="w-[20%]">Matricule</hlm-th>
+        <hlm-th class="w-[20%]">Nom</hlm-th>
+        <hlm-th class="w-[20%]">Prénom</hlm-th>
+        <hlm-th class="w-[20%]">Fonction</hlm-th>
+        <hlm-th class="w-[20%]">Action</hlm-th>
+
+      </hlm-trow>
+      <hlm-scroll-area class="w-full  h-[380px]  ">
+        @for (membre of personnel;track membre.matricule){
+
+          <hlm-trow>
+            <hlm-th class="w-[20%]" >{{membre.matricule}}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.nom }}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.prenom }}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.fonction.nom }}</hlm-th>
+            <hlm-th class="w-[20%] " >
+              <button hlmBtn type="button" (click)="removePersonnel(membre)" size="icon"  variant="destructive" >
+                <hlm-icon size="sm"  name="lucideUserMinus" />
+
+              </button>
+            </hlm-th>
+          </hlm-trow>
+
+        }
+        @for (membre of addedPersonnel;track membre.matricule){
+
+          <hlm-trow>
+            <hlm-th class="w-[20%]" >{{membre.matricule}}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.nom }}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.prenom }}</hlm-th>
+            <hlm-th class="w-[20%]" >{{ membre.fonction.nom }}</hlm-th>
+            <hlm-th class="w-[20%] " >
+            </hlm-th>
+          </hlm-trow>
+
+        }
+      </hlm-scroll-area>
+    </hlm-table>
+    <hlm-dialog-footer>
+      @if (isComboBoxOpen){
+        <div class="flex flex-col gap-5 w-full ">
+          <app-personnel-select (setPersonnel)="setAddedPersonnel($event)" />
+          <div class="flex w-full gap-[50px]">
+            <button hlmBtn class="w-full" (click)="cancelAddingPersonnel()" >Annuler</button>
+            <button hlmBtn class="w-full" *ngIf="!loading" (click)="submit()" >Valider</button>
+            <button hlmBtn class="w-full" *ngIf="loading" disabled ><hlm-spinner size="sm" class="mr-3"/> En cours...</button>
+          </div>
+        </div>
+      } @else {
+        <div class="flex w-full gap-[50px]">
+          <button hlmBtn  class="w-full" (click)="toggleComboBox()" >Ajouter des membres</button>
+          <button hlmBtn class="w-full" *ngIf="!loading" (click)="submit()" >Valider</button>
+          <button hlmBtn class="w-full" *ngIf="loading" disabled ><hlm-spinner size="sm" class="mr-3"/> En cours...</button>
+        </div>
+      }
+
+    </hlm-dialog-footer>
+
+
+  </hlm-dialog-content>
+</hlm-dialog>

@@ -1,0 +1,107 @@
+<div class="flex flex-col w-full " >
+  <h1 class="text-2xl text-center mb-5 font-semibold" >Plan de roulement</h1>
+  @if (operation.planRoulement && !edit){
+    <div class="grid grid-cols-2 gap-4 p-4 border rounded-md">
+      <div class="font-semibold">Mode de travail :</div>
+      <div>{{ operation.modeTravail.semaine === 'SIX_JOURS_SUR_SEPT' ? '6/7 jours' : '7/7 jours' }}</div>
+
+      <div class="font-semibold">Shift :</div>
+      <div>{{ operation.modeTravail.jour === 'TROIS_SHIFTS_SUR_TROIS' ? '3/3 shifts' : '2/3 shifts' }}</div>
+
+      <div class="font-semibold">Plan de travail :</div>
+      <div>Par {{ operation.planRoulement.plan }}</div>
+
+      <div class="font-semibold">Date début :</div>
+      <div>{{ operation.planRoulement.startDate }}</div>
+
+      <div class="font-semibold">Date fin :</div>
+      <div>{{ operation.planRoulement.endDate }}</div>
+
+      <div class="font-semibold">Equipe :</div>
+      <div>
+        <hlm-table class="w-fit">
+          <hlm-trow>
+            <hlm-th class="w-[100px]">Id</hlm-th>
+            <hlm-th class="w-[100px]">Nom</hlm-th>
+            <hlm-th class="w-[100px]">Shift</hlm-th>
+          </hlm-trow>
+          <hlm-scroll-area class="border w-[302px] h-44  ">
+            @for (equipe of operation.equipeList ;track equipe.id){
+              <hlm-trow>
+                <hlm-th class="w-[100px]">{{ equipe.id }}</hlm-th>
+                <hlm-th class="w-[100px]">{{ equipe.nom }}</hlm-th>
+                <hlm-th class="w-[100px]">{{ equipe.shift }}</hlm-th>
+              </hlm-trow>
+            }
+          </hlm-scroll-area>
+        </hlm-table>
+      </div>
+    </div>
+    <button hlmBtn class="w-full mt-2"   (click)="toggleEditBox()" >Modifier</button>
+
+
+
+  } @else if(!operation.planRoulement || edit){
+
+    <form [formGroup]="form">
+
+        <div class="  w-full justify-center flex gap-6 mb-7 mr-10 ">
+          <label  class="font-semibold" >Plan :</label>
+          <brn-radio-group  class="flex gap-7 " hlm formControlName="plan">
+            <brn-radio hlm value="Semaine">
+              <hlm-radio-indicator indicator />
+              Semaine
+            </brn-radio>
+            <brn-radio hlm value="Mois">
+              <hlm-radio-indicator indicator />
+              Mois
+            </brn-radio>
+          </brn-radio-group>
+        </div>
+
+        <div class="flex w-full justify-center gap-[100px]">
+
+          <label hlmLabel  >Date début
+            <input class="w-60" formControlName="startDate" hlmInput type="date" />
+          </label>
+
+          <label hlmLabel>Date fin
+            <input class="w-60" formControlName="endDate"  hlmInput type="date" />
+          </label>
+
+      </div>
+
+      <div class="flex w-full mt-7 justify-center ">
+        <div>
+          <label hlmLabel class="pl-2">Equipe </label>
+
+          <hlm-table class="w-fit">
+            <hlm-trow>
+              <hlm-th class="w-[100px]">Id</hlm-th>
+              <hlm-th class="w-[100px]">Nom</hlm-th>
+              <hlm-th >Shift</hlm-th>
+
+            </hlm-trow>
+            <hlm-scroll-area class="border w-[430px] h-44  border-border">
+              @for (equipe of operation.equipeList ;track equipe.id){
+                <app-select-shift-item [equipe]="equipe" />
+              }
+            </hlm-scroll-area>
+          </hlm-table>
+        </div>
+
+      </div>
+
+      <div class="flex justify-center mt-4 gap-8">
+        <button hlmBtn class="w-52" variant="secondary" *ngIf="edit" (click)="toggleEditBox()" >Annuler</button>
+        <button hlmBtn *ngIf="!loading" class="w-52" (click)="save()"  >Enregistrer</button>
+        <button hlmBtn *ngIf="loading" disabled ><hlm-spinner size="sm" class="mr-3"/> En cours...</button>
+      </div>
+
+
+
+    </form>
+
+  }
+
+</div>

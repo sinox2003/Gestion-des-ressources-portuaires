@@ -1,0 +1,33 @@
+
+  <div class="flex w-full justify-center gap-[100px]">
+    <div>
+      <h3 class="text-center font-semibold mb-2">Période normale</h3>
+      <div class="flex flex-col gap-2">
+        <div>Shift 1 : De {{shiftTimesNormal[0]}}</div>
+        <div>Shift 2 : De {{shiftTimesNormal[1]}}</div>
+        <div>Shift 3 : De {{shiftTimesNormal[2]}}</div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-center font-semibold mb-2">Période Ramadan</h3>
+      <div class="flex flex-col gap-2">
+        <div>Shift 1 : De {{shiftTimesRamadan[0]}}</div>
+        <div>Shift 2 : De {{shiftTimesRamadan[1]}}</div>
+        <div>Shift 3 : De {{shiftTimesRamadan[2]}}  </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=" flex-col flex items-center w-full mt-4">
+    <div>
+      <div class="text-teal-600 italic mb-4">Définir la période normale</div>
+      <div>Debut : {{periodShift?.ramadanStartDate}}</div>
+      <div>Fin : {{periodShift?.ramadanEndDate}}</div>
+    </div>
+  </div>
+
+  <div class="flex justify-center mt-5 ">
+    <button hlmBtn variant="destructive" (click)="toggleEdit.emit()" class="px-20 py-3">Modifier</button>
+
+  </div>

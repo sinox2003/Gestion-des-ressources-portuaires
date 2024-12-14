@@ -1,0 +1,36 @@
+<div class="mt-7 w-full flex flex-col  items-center" >
+  @if (isCardOpen){
+    <section class="w-80 mt-7 " hlmCard>
+      <div hlmCardHeader>
+        <h3 hlmCardTitle>Créer un nouveau port</h3>
+        <p hlmCardDescription>Déployez votre nouveau port en un clic.</p>
+      </div>
+      <p hlmCardContent>
+        <label class="block " hlmLabel>
+          Nom du port
+          <input class="mt-1.5 w-full" [(ngModel)]="nomPort" placeholder="Nom de votre port" hlmInput />
+        </label>
+      </p>
+      <div hlmCardFooter class="justify-between">
+        <button hlmBtn (click)="toggleCard()" variant="ghost">Annuler</button>
+        @if (loading){
+          <button hlmBtn class="gap-3">
+            <hlm-spinner size="sm" /> En cours...
+          </button>
+        } @else {
+
+          <button hlmBtn (click)="createPort()">Créer</button>
+        }
+      </div>
+    </section>
+
+  } @else {
+
+    <button hlmBtn (click)="toggleCard()" variant="outline" class="w-72 hover:bg-[#F5F1ED] hover:text-[#1A1615]  gap-3" >
+      <hlm-icon  name="lucidePlusCircle" />
+      Ajouter un port
+    </button>
+  }
+
+</div>
+<hlm-toaster />

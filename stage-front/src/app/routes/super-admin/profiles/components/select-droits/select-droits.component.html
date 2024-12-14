@@ -1,0 +1,48 @@
+
+
+@if (isShown){
+  <div class=" p-5">
+
+      <hlm-table class="w-full border h-72 rounded-md border-border">
+        <hlm-caption class="self-start pl-3 pb-3">Liste des droits : {{selectedDroits.length}} sélectionner</hlm-caption>
+        <hlm-trow>
+          <hlm-th class="w-20" >Select</hlm-th>
+          <hlm-th class="w-60">Droit</hlm-th>
+          <hlm-th>Description</hlm-th>
+        </hlm-trow>
+        @if (loading){
+        } @else {
+          <hlm-scroll-area class="w-full border-b h-72">
+
+            @for (droit of droitList; track droit.id){
+
+              <hlm-trow>
+                <hlm-td class="w-20">
+                  <hlm-checkbox [checked]="isChecked(droit.id)" (changed)="onCheckboxChange($event,droit)" class="mr-2" />
+                </hlm-td>
+                <hlm-td class="w-60">{{ droit.nom }}</hlm-td>
+                <hlm-td>{{ droit.description }}</hlm-td>
+              </hlm-trow>
+
+            }
+          </hlm-scroll-area>
+
+        }
+      </hlm-table>
+        <div class="flex justify-end mt-4 gap-4">
+          <button hlmBtn variant="secondary" (click)="toggleSelectDroit()">Annuler</button>
+            @if (updateLoading){
+              <button hlmBtn disabled ><hlm-spinner size="xs" class="mr-3"/> Ajouter</button>
+            } @else {
+              <button hlmBtn  (click)="addDroitsToUser()">Ajouter</button>
+            }
+        </div>
+  </div>
+} @else {
+  <button hlmBtn variant="link" (click)="toggleSelectDroit()" class="gap-2 w-full" >
+    <hlm-icon size='sm' name="lucideBookPlus" />
+    Ajouter
+  </button>
+}
+
+

@@ -1,0 +1,30 @@
+<div class="flex justify-between items-center">
+    <span class="font-medium pl-5">
+      {{ terminal.nom }}
+    </span>
+
+
+  <button hlmBtn variant="ghost" [brnMenuTriggerFor]="menu">
+    <hlm-icon class="w-4 h-4" name="lucideMoreVertical" />
+  </button>
+
+  <ng-template #menu>
+    <hlm-menu>
+      <hlm-menu-label>Opérations </hlm-menu-label>
+      <hlm-menu-separator />
+      <hlm-menu-group>
+        <button [routerLink]="[port.nom,terminal.nom,terminal.id,'manutention',terminal.operationManutention.id]" class="text-red-700 hover:text-red-500"  hlmMenuItem>
+          Manutention
+        </button>
+      </hlm-menu-group>
+
+      <hlm-menu-group>
+        <button    [routerLink]="[port.nom,terminal.nom,terminal.id,'marine',terminal.operationMarine.id]"  class="text-red-700 hover:text-red-500" hlmMenuItem>Marines</button>
+      </hlm-menu-group>
+      <hlm-menu-group>
+        <button    [routerLink]="[port.nom,terminal.nom,terminal.id,'logistique',terminal.operationLogistique.id]"  class="text-red-700 hover:text-red-500" hlmMenuItem>Logistiques et Annexes </button>
+      </hlm-menu-group>
+    </hlm-menu>
+  </ng-template>
+</div>
+

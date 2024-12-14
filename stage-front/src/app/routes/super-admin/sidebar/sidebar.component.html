@@ -1,0 +1,53 @@
+
+
+<div class="sidebar" >
+  <div class="ml-4 mb-4">
+    <img src="assets/marsamaroc_logo.png" class="w-32"/>
+  </div>
+  <div class="sidebar-content">
+
+    <button routerLink="utilisateurs" routerLinkActive="routerLinkActive" variant="ghost" hlmBtn>
+        <hlm-icon    name="lucideUsers"    />
+        <span >
+          Utilisateurs
+        </span>
+    </button>
+
+    <button routerLink="profiles" routerLinkActive="routerLinkActive"  variant="ghost" hlmBtn>
+        <hlm-icon    name="lucideScanFace"   />
+        <span >
+          Profiles
+        </span>
+    </button>
+
+    <button routerLink="ports" routerLinkActive="routerLinkActive" variant="ghost" hlmBtn>
+        <hlm-icon    name="lucideAnchor"   />
+        <span >
+          Ports
+        </span>
+    </button>
+
+    <button routerLink="paramétrage" routerLinkActive="routerLinkActive" variant="ghost" hlmBtn>
+        <hlm-icon    name="lucideSettings"   />
+        <span >
+          Paramétrage
+        </span>
+    </button>
+
+    <button [routerLink]="'mon-compte/'+currentUser" routerLinkActive="routerLinkActive" variant="ghost" hlmBtn>
+        <hlm-icon    name="lucideUser"   />
+        <span >
+          Mon compte
+        </span>
+    </button>
+
+  </div>
+
+  <button (click)="logout()" variant="ghost" hlmBtn>
+    <hlm-icon    name="lucideLogOut"   />
+    <span >
+          Se déconnecter
+        </span>
+  </button>
+
+</div>

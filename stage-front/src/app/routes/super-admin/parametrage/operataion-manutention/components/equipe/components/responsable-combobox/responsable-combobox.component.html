@@ -1,0 +1,34 @@
+<div [formGroup]="form" class="max-w-60">
+
+  @if (loading){
+
+    <hlm-skeleton class='h-10 mt-1 w-60' />
+
+  } @else {
+    <brn-select  class="inline-block mt-1" formControlName="responsable" placeholder="Selectionner le responsable">
+
+      <hlm-select-trigger  class="w-60">
+        <hlm-select-value  />
+      </hlm-select-trigger>
+
+      <hlm-select-content >
+        <input class=" mt-1 mb-2 w-[222px] ml-[4px] border-b-2 rounded"   (input)="filterPersonnel($event)"   hlmInput type="text"  placeholder="Search by matricule"/>
+
+        @if (personnel && filteredPersonnel.length > 0 ){
+          @for (membre of filteredPersonnel;track membre.matricule){
+
+            <hlm-option  [value]="membre">{{ membre.matricule }}</hlm-option>
+
+          }
+        } @else {
+
+          <hlm-select-label  >Aucun résultat</hlm-select-label>
+
+        }
+
+      </hlm-select-content>
+    </brn-select>
+
+  }
+
+</div>

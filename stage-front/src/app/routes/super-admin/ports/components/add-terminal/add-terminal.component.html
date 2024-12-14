@@ -1,0 +1,29 @@
+<brn-popover sideOffset="5" closeDelay="100">
+  <button id="edit-profile" class="w-full" variant="link" brnPopoverTrigger hlmBtn>
+    <hlm-icon size="sm" class="mr-2" name="lucidePlus" />
+    Ajouter un terminal
+  </button>
+
+  <div hlmPopoverContent class="w-80 grid gap-4" *brnPopoverContent="let ctx">
+    <div class="space-y-2">
+      <h4 class="font-medium leading-none">Port {{ port.nom }}</h4>
+    </div>
+
+    <div class="items-center grid grid-cols-3 gap-4">
+      <label hlmLabel for="terminal">Nom terminal</label>
+      <input hlmInput id="terminal" [(ngModel)]="nomTerminal" class="h-8 col-span-2" />
+    </div>
+
+    <div>
+      @if (loading) {
+        <button disabled variant="secondary" class="float-right" hlmBtn>
+          <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" /> En cours...
+        </button>
+      } @else {
+        <button variant="secondary" (click)="ajouterTerminal(ctx)" class="float-right" hlmBtn>valider</button>
+      }
+    </div>
+  </div>
+</brn-popover>
+
+<hlm-toaster />

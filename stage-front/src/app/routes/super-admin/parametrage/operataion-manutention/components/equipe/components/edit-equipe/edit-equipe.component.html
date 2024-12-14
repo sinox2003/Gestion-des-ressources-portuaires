@@ -1,0 +1,37 @@
+
+<hlm-sheet side="right">
+  <button hlmBtn size="icon" brnSheetTrigger class="gap-2 bg-green-700 hover:bg-green-800" >
+    <hlm-icon size="sm" name="lucideEdit"  />
+  </button>
+  <hlm-sheet-content *brnSheetContent="let ctx">
+    <hlm-sheet-header>
+      <h3 hlmSheetTitle>Modifier équipe</h3>
+      <p hlmSheetDescription>Modifier le nom et le responsable de l'équipe.</p>
+      <p hlmSheetDescription>
+        <span class="text-destructive">NB: </span>Pour modifier le personnel clicker sur <b>"Cliquer"</b> dans le tableau.
+      </p>
+    </hlm-sheet-header>
+    <div  class="py-4 grid gap-4">
+      <div [formGroup]="form" class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="nom" class="text-right">Nom</label>
+        <input hlmInput id="nom" formControlName="nom" placeholder="Nom"  class="col-span-3 w-60" />
+      </div>
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel  class="text-right">Responsable</label>
+        <app-responsable-combobox  (setResponsable)="setResponsable($event)" />
+      </div>
+      <div class="items-center grid grid-cols-4 gap-4">
+        <label hlmLabel for="responsable" class="text-right"></label>
+        <input hlmInput id="responsable" disabled [value]="responsable.matricule"  class="col-span-3 w-60" />
+      </div>
+    </div>
+    <hlm-sheet-footer>
+      <button hlmBtn *ngIf="!loading" (click)="save(ctx)">Save Changes</button>
+      <button hlmBtn *ngIf="loading" disabled>
+        <hlm-spinner size="sm" class="mr-2" />
+        En cours...
+      </button>
+    </hlm-sheet-footer>
+  </hlm-sheet-content>
+</hlm-sheet>
+

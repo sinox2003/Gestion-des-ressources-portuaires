@@ -1,0 +1,51 @@
+
+
+<div class="main-box">
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <div class="mb-10 w-full flex justify-center">
+    <img src="assets/marsamaroc_logo.png" class="w-52"/>
+  </div>
+
+  <div class="field" >
+    <label for="matricule"  class="font-semibold" >
+      Matricule
+    </label>
+    <input  type="text" id="matricule" formControlName="matricule" placeholder="Matricule" />
+    <div *ngIf="loginForm.get('matricule')?.touched && loginForm.get('matricule')?.invalid" class="text-destructive">
+      Le matricule est requis.
+    </div>
+
+  </div>
+
+
+    <div class="field" >
+      <label class="font-semibold" for="password">Password</label>
+      <input id="password" name="mdp" type="text" formControlName="mdp" placeholder="Mot de passe">
+      <div *ngIf="loginForm.get('mdp')?.touched && loginForm.get('mdp')?.invalid" class="text-destructive">
+        Le mot de passe est requis.
+      </div>
+    </div>
+
+    @if (error){
+      <div class="error-box">
+        Une erreur est survenue ou les données ne sont pas valides.
+      </div>
+
+    }
+
+        <div class="button-box">
+          <button [disabled]="loginForm.get('mdp')?.invalid || loginForm.get('matricule')?.invalid" hlmBtn>
+            @if (loading){
+            <hlm-spinner size="xs" class="mr-3"/> Se connecter
+            }
+            @else {
+                Se connecter
+            }
+          </button>
+        </div>
+
+  </form>
+
+</div>
+
